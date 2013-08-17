@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.kw.rpg.engine.GameObject;
+import com.kw.rpg.engine.Physics;
+import com.kw.rpg.engine.Rectangle;
 import com.kw.rpg.engine.Utility;
 import com.kw.rpg.game.gameobject.CookieMonster;
 import com.kw.rpg.game.gameobject.Player;
@@ -72,6 +74,24 @@ public class Game
 		for (GameObject go : objects)
 		{
 			if (Util.dist(go.getX(), go.getY(), x, y) < radius)
+				res.add(go);
+		}
+		
+		return res;
+	}
+	
+	public ArrayList<GameObject> rectangleCollide(float x1, float y1, float x2, float y2)
+	{
+		ArrayList<GameObject> res = new ArrayList<GameObject>();
+		
+		float sx = x2 - x1;
+		float sy = y2 - y1;
+		
+		Rectangle collider = new Rectangle((int)x1, (int)y1, (int)sx, (int)sy);
+		
+		for (GameObject go : objects)
+		{
+			if (Physics.checkCollision(collider, go) != null)
 				res.add(go);
 		}
 		

@@ -1,14 +1,18 @@
 package com.kw.rpg.engine;
 
-import android.graphics.Rect;
+import com.kw.rpg.engine.Rectangle;
 
 public class Physics {
 
-	// go1:itself, go2:to be test
+	// go1:itself, go2:to be tested
 	public static GameObject checkCollision(GameObject go1, GameObject go2)
 	{
-		Rect r1 = new Rect((int)go1.getX(),(int)go1.getY(),(int)(go1.getX()+go1.getSX()-1),(int)(go1.getY()+go1.getSY()-1));
-		Rect r2 = new Rect((int)go2.getX(),(int)go2.getY(),(int)(go2.getX()+go2.getSX()-1),(int)(go2.getY()+go2.getSY()-1));
+		return checkCollision(new Rectangle((int)go1.getX(), (int)go1.getY(), (int)go1.getSX(), (int)(go1.getSY())), go2);
+	}
+	
+	public static GameObject checkCollision(Rectangle r1, GameObject go2)
+	{
+		Rectangle r2 = new Rectangle((int)go2.getX(), (int)go2.getY(), (int)go2.getSX(), (int)go2.getSY());
 
 		boolean res = r1.intersect(r2);
 		

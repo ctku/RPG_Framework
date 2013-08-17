@@ -2,7 +2,7 @@ package com.kw.rpg.game.gameobject;
 
 public class Stats 
 {
-	public static final double LEVEL_CONST = 25 * Math.pow(3, (3.0/2.0));
+	public static final double LEVEL_CONST = 25.0 * Math.pow(3.0, (3.0/2.0));
 
 	private float xp;
 	private int level;
@@ -45,13 +45,13 @@ public class Stats
 		if (!levelable)
 			return level;
 		
-		double x = xp + 105;
+		double x = xp + 105.0;
 		
-		double a = Math.sqrt(243 * (x * x) + 4050 * x + 17500);
-		double c = (3 * x + 25) / 25;
+		double a = Math.sqrt(243.0 * (x * x) + 4050.0 * x + 17500.0);
+		double c = (3.0 * x + 25.0) / 25.0;
 		double d = Math.cbrt(a / LEVEL_CONST + c);
 		
-		return (int)(d - 1.0/d * 3) - 1;
+		return (int)(d - 1.0/d * 3.0) - 1;
 	}
 	
 	public int getMaxHealth()

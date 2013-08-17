@@ -6,9 +6,10 @@ import android.util.Log;
 
 public abstract class GameObject {
 
-	public static final int PLAYER_ID = 2;
 	public static final int ITEM_ID = 1;
-	
+	public static final int PLAYER_ID = 2;
+	public static final int ENEMY_ID = 3;
+			
 	protected float x;
 	protected float y;
 	protected int type;
@@ -69,7 +70,6 @@ public abstract class GameObject {
 	
 	protected void init(float x, float y, float r, float g, float b, float sx, float sy, int type)
 	{
-		Log.d("GameObject", "init()");
 		this.x = x;
 		this.y = y;
 		this.type = type;

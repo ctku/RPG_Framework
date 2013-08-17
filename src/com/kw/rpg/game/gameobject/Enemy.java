@@ -2,8 +2,11 @@ package com.kw.rpg.game.gameobject;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.kw.rpg.engine.GameObject;
 import com.kw.rpg.engine.MainActivity;
+import com.kw.rpg.engine.Sprite;
 import com.kw.rpg.game.Delay;
 import com.kw.rpg.game.Time;
 import com.kw.rpg.game.Util;
@@ -51,6 +54,7 @@ public class Enemy extends StatObject
 	protected void Attack()
 	{
 		getTarget().damage(getAttackDamage());
+		System.out.println("We're hit! : " + getTarget().getCurrentHealth() + "/" + getTarget().getMaxHealth());
 		restartAttackDelay();
 	}
 
@@ -133,5 +137,15 @@ public class Enemy extends StatObject
 	public void setSightRange(float dist)
 	{
 		sightRange = dist;
+	}
+	
+	@Override
+	protected void init(float x, float y, float r, float g, float b, float sx, float sy, int type)
+	{
+		Log.d("GameObject", "init()");
+		this.x = x;
+		this.y = y;
+		this.type = ENEMY_ID;
+		this.spr = new Sprite(r,g,b,sx,sy);
 	}
 }
