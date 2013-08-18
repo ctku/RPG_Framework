@@ -12,30 +12,31 @@ public class Delay
 		started = false;
 	}
 	
-	public boolean over()
+	public boolean isOver()
 	{
 		if (!started) return false;
 		
 		return (Time.getTime() > endTime);
 	}
 	
-	public void start()
+	public boolean isActive()
+	{
+		return started;
+	}
+	
+	public void restart()
 	{
 		started = true;
 		endTime = length * 1000000 + Time.getTime();
 	}
 	
-	public void reset()
+	public void stop()
 	{
 		started = false;
 	}
 	
-	public boolean active()
-	{
-		return started;
-	}
-	
-	public void end()
+
+	public void terminate()
 	{
 		started = true;
 		endTime = 0;

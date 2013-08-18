@@ -49,9 +49,8 @@ public class Inventory
 		for (int i=0; i<items.length; i++)
 			if (items[i] == item)
 			{
-				items[i] = null;
-				if (i < firstFree)
-					firstFree = i;
+				remove(i);
+				return;
 			}
 	}
 }

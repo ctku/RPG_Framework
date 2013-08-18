@@ -7,6 +7,11 @@ import android.util.Log;
 
 public class Renderer implements android.opengl.GLSurfaceView.Renderer
 {
+	//For frame rate calculation
+	private int frames = 0;
+	private long lastTime = System.nanoTime();
+	private long totalTime = 0;
+	
 	private static RendererCallback callback;
 	public interface RendererCallback {
 		void func(GL10 gl);
@@ -19,10 +24,23 @@ public class Renderer implements android.opengl.GLSurfaceView.Renderer
 	@Override
 	public void onDrawFrame(GL10 gl) 
 	{
-		//Log.d("Renderer", "onDrawFrame()");
+		long now = System.nanoTime();
+		long passed = now - lastTime;
+		lastTime = now;
+		totalTime += passed;
+		
+		if (totalTime >= 1000000000)
+		{
+			//System.out.println(frames);
+			totalTime = 0;
+			frames = 0;
+		}
+		
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		gl.glLoadIdentity();
 		callback.func(gl);
+		
+		frames++;
 	}
 
 	@Override

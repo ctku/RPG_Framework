@@ -8,6 +8,7 @@ import com.kw.rpg.engine.GameObject;
 import com.kw.rpg.engine.MainActivity;
 import com.kw.rpg.engine.Sprite;
 import com.kw.rpg.game.Delay;
+import com.kw.rpg.game.Game;
 import com.kw.rpg.game.Time;
 import com.kw.rpg.game.Util;
 
@@ -27,7 +28,7 @@ public class Enemy extends StatObject
 		attackDelay = new Delay(500);
 		attackRange = 48f;
 		attackDamage = 1;
-		attackDelay.end();
+		attackDelay.terminate();
 		sightRange = 128;
 	}
 	
@@ -40,7 +41,7 @@ public class Enemy extends StatObject
 		{
 			if (Util.LineOfSight(this, target) && (Util.dist(x, y, getTarget().getX(), getTarget().getY()) <= attackRange))
 			{	
-				if (attackDelay.over())
+				if (attackDelay.isOver())
 					Attack();
 			}
 			else
@@ -55,7 +56,7 @@ public class Enemy extends StatObject
 	{
 		getTarget().damage(getAttackDamage());
 		System.out.println("We're hit! : " + getTarget().getCurrentHealth() + "/" + getTarget().getMaxHealth());
-		restartAttackDelay();
+		attackDelay.restart();
 	}
 
 	protected void Death()
@@ -65,7 +66,7 @@ public class Enemy extends StatObject
 	
 	protected void Look()
 	{
-		ArrayList<GameObject> objects = MainActivity.sphereCollide(x, y, sightRange);
+		ArrayList<GameObject> objects = Game.sphereCollide(x, y, sightRange);
 		
 		for (GameObject go : objects)
 			if (go.getType() == PLAYER_ID)
@@ -77,7 +78,7 @@ public class Enemy extends StatObject
 		float speedX = (getTarget().getX() - x);
 		float speedY = (getTarget().getY() - y);
 		
-		float maxSpeed = getStats().getSpeed() * DAMPING;
+		float maxSpeed = 4f;//getStats().getSpeed() * DAMPING; //TODO: Add speed based scaling
 		
 		if (speedX > maxSpeed)
 			speedX = maxSpeed;
@@ -121,17 +122,12 @@ public class Enemy extends StatObject
 	public void setAttackDelay(int time)
 	{
 		attackDelay = new Delay(time);
-		attackDelay.end();
+		attackDelay.terminate();
 	}
 	
 	public void setAttackDamage(int amt)
 	{
 		attackDamage = amt;
-	}
-	
-	public void restartAttackDelay()
-	{
-		attackDelay.start();
 	}
 	
 	public void setSightRange(float dist)

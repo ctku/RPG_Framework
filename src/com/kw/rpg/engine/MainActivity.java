@@ -1,9 +1,6 @@
 package com.kw.rpg.engine;
 
-import java.util.ArrayList;
-
 import javax.microedition.khronos.opengles.GL10;
-
 import com.kw.base.R;
 import com.kw.rpg.engine.Renderer.RendererCallback;
 import com.kw.rpg.game.Game;
@@ -19,8 +16,6 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity 
 {
-	private static Game game;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -46,25 +41,15 @@ public class MainActivity extends Activity
 		gameLoop();
 	}
 
-	public static ArrayList<GameObject> sphereCollide(float x, float y, float radius)
-	{
-		return game.sphereCollide(x, y, radius);
-	}
-	
-	public static ArrayList<GameObject> rectangleCollide(float x1, float y1, float x2, float y2)
-	{
-		return game.rectangleCollide(x1, y1, x2, y2);
-	}
-	
 	private static void initGame()
 	{
-		game = new Game();
+		Game.game = new Game();
 	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
-		game.getKeyboardInput(keyCode);
+		Game.game.getKeyboardInput(keyCode);
 		
 		return true;
 	}
@@ -72,26 +57,25 @@ public class MainActivity extends Activity
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		game.getMouseInput(event);
+		Game.game.getMouseInput(event);
 		
 		return true;
 	}
 	
 	public static void update()
 	{
-		game.update();
+		Game.game.update();
 	}
 	
 	public static void render(GL10 gl)
 	{
-		game.render(gl);
+		Game.game.render(gl);
 	}
-	
-	
+
 	public static void gameLoop()
 	{
 		Time.init();
-		
+
 		RendererCallback callbackObj = new RendererCallback() {
 			public void func(GL10 gl) {
 				// gameLoop

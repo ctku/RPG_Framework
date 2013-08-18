@@ -6,6 +6,7 @@ import android.util.Log;
 
 public abstract class GameObject {
 
+	public static final int DEFAULT_ID = 0;
 	public static final int ITEM_ID = 1;
 	public static final int PLAYER_ID = 2;
 	public static final int ENEMY_ID = 3;
@@ -15,7 +16,7 @@ public abstract class GameObject {
 	protected int type;
 	protected Sprite spr;
 	
-	protected boolean[] flags = new boolean[1];
+	protected boolean[] flags = new boolean[2];
 
 	public void update()
 	{
@@ -63,9 +64,19 @@ public abstract class GameObject {
 		return flags[0];
 	}
 	
+	public boolean getSolid()
+	{
+		return flags[1];
+	}
+	
 	public void remove()
 	{
 		flags[0] = true;
+	}
+	
+	public void setSolid(boolean value)
+	{
+		flags[1] = value;
 	}
 	
 	protected void init(float x, float y, float r, float g, float b, float sx, float sy, int type)
